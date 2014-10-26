@@ -3,3 +3,29 @@ body {
     color: #fff;
     font-family: 'Roboto Condensed', sans-serif;
 }
+
+.dial {
+    position: relative;
+}
+
+.dial > span {
+    position: absolute;
+    left: 0;
+    width: 320px;
+    top: 0;
+    bottom: 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.dial > .value {
+    font-size: 50px;
+}
+
+.dial > .title {
+    font-size: 25px;
+    text-transform:  uppercase;
+    opacity: 0.8;
+    align-items: flex-end;
+}

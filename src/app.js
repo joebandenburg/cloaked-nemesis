@@ -1,7 +1,5 @@
 // Everything is in seconds. You noob.
 
-
-
 var app = angular.module('clockedNemesis', []);
 
 app.controller('Main', function($scope, $interval) {
@@ -20,14 +18,14 @@ app.controller('Main', function($scope, $interval) {
         shields: 100,
         power: 100000,
         weapons: [{
-            fireRate: 5,
+            fireRate: 0.5,
             lastFired: 0,
-            damage: 50,
-            hitProbability: 0.8
+            damage: 20,
+            hitProbability: 0.5
         }]
     };
 
-    function updateLoop(time) {
+    function updateLoop() {
         var timeDelta = 0.016;
         var time = performance.now() / 1000;
 
@@ -36,7 +34,7 @@ app.controller('Main', function($scope, $interval) {
             $scope.playerShip.shields.currentValue += $scope.playerShip.shields.regenRate * timeDelta;
             $scope.playerShip.shields.currentValue = Math.min($scope.playerShip.shields.maxValue, $scope.playerShip.shields.currentValue);
         }
-        
+
         // Enemy fires
         $scope.enemyShip.weapons.forEach(function(weapon) {
             if (weapon.lastFired + weapon.fireRate < time) {
@@ -51,4 +49,39 @@ app.controller('Main', function($scope, $interval) {
     }
 
     $interval(updateLoop, 16);
+});
+
+app.directive('dial', function() {
+    function link(scope, element, attrs) {
+        var canvas = element.find('canvas')[0];
+        var ctx = canvas.getContext('2d');
+        var radius = 100;
+        var width = 2;
+        var progressColour = '#23a9b8';
+        var backgroundColour = '#333';
+        var imageSize = 320;
+
+        scope.$watch('value', function(value) {
+            var center = imageSize / 2;
+            ctx.clearRect(0, 0, imageSize, imageSize);
+            ctx.strokeStyle = backgroundColour;
+            ctx.lineWidth = width;
+            ctx.beginPath();
+            ctx.arc(center, center, radius, -Math.PI / 2, Math.PI * 1.5, false);
+            ctx.stroke();
+            ctx.beginPath();
+            ctx.strokeStyle = progressColour;
+            ctx.arc(center, center, radius, -Math.PI / 2, -Math.PI / 2 + Math.PI * value / 100 * 2, false);
+            ctx.stroke();
+        });
+    }
+    return {
+        restrict: 'E',
+        scope: {
+            title: '@',
+            value: '='
+        },
+        link: link,
+        template: '<div class="dial"><canvas width="320" height="320"></canvas><span class="value">{{value | number:0}}%</span><span class="title">{{title}}</span></div>'
+    };
 });
