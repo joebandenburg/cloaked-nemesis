@@ -2,7 +2,19 @@
 
 var app = angular.module('clockedNemesis', []);
 
-app.controller('Main', function($scope, $interval) {
+app.factory('requestAnimationFrameLoop', function ($rootScope) {
+    return function(callback) {
+        function loopCallback(time) {
+            $rootScope.$apply(function() {
+                callback(time);
+            });
+            requestAnimationFrame(loopCallback);
+        };
+        requestAnimationFrame(loopCallback);
+    };
+});
+
+app.controller('Main', function ($scope, requestAnimationFrameLoop) {
     $scope.playerShip = {
         hp: 1000,
         shields: {
@@ -24,10 +36,12 @@ app.controller('Main', function($scope, $interval) {
             hitProbability: 0.5
         }]
     };
-
-    function updateLoop() {
-        var timeDelta = 0.016;
-        var time = performance.now() / 1000;
+    
+    var lastTime = performance.now() / 1000;
+    function updateLoop(time) {
+        time /= 1000;
+        var timeDelta = time - lastTime;
+        lastTime = time;
 
         // Regen shields
         if ($scope.playerShip.shields.currentValue < $scope.playerShip.shields.maxValue) {
@@ -36,7 +50,7 @@ app.controller('Main', function($scope, $interval) {
         }
 
         // Enemy fires
-        $scope.enemyShip.weapons.forEach(function(weapon) {
+        $scope.enemyShip.weapons.forEach(function (weapon) {
             if (weapon.lastFired + weapon.fireRate < time) {
                 weapon.lastFired = time;
                 var wasHit = Math.random() < weapon.hitProbability;
@@ -48,10 +62,10 @@ app.controller('Main', function($scope, $interval) {
         });
     }
 
-    $interval(updateLoop, 16);
+    requestAnimationFrameLoop(updateLoop);
 });
 
-app.directive('dial', function() {
+app.directive('dial', function () {
     function link(scope, element, attrs) {
         var canvas = element.find('canvas')[0];
         var ctx = canvas.getContext('2d');
@@ -61,7 +75,7 @@ app.directive('dial', function() {
         var backgroundColour = '#333';
         var imageSize = 320;
 
-        scope.$watch('value', function(value) {
+        scope.$watch('value', function (value) {
             var center = imageSize / 2;
             ctx.clearRect(0, 0, imageSize, imageSize);
             ctx.strokeStyle = backgroundColour;
