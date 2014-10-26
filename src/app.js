@@ -3,9 +3,9 @@
 var app = angular.module('clockedNemesis', []);
 
 app.factory('requestAnimationFrameLoop', function ($rootScope) {
-    return function(callback) {
+    return function (callback) {
         function loopCallback(time) {
-            $rootScope.$apply(function() {
+            $rootScope.$apply(function () {
                 callback(time);
             });
             requestAnimationFrame(loopCallback);
@@ -36,8 +36,9 @@ app.controller('Main', function ($scope, requestAnimationFrameLoop) {
             hitProbability: 0.5
         }]
     };
-    
+
     var lastTime = performance.now() / 1000;
+
     function updateLoop(time) {
         time /= 1000;
         var timeDelta = time - lastTime;
@@ -75,6 +76,10 @@ app.directive('dial', function () {
         var backgroundColour = '#333';
         var imageSize = 320;
 
+        scope.$watch('colour', function (value) {
+            progressColour = value;
+        });
+
         scope.$watch('value', function (value) {
             var center = imageSize / 2;
             ctx.clearRect(0, 0, imageSize, imageSize);
@@ -93,7 +98,8 @@ app.directive('dial', function () {
         restrict: 'E',
         scope: {
             title: '@',
-            value: '='
+            value: '=',
+            colour: '@'
         },
         link: link,
         template: '<div class="dial"><canvas width="320" height="320"></canvas><span class="value">{{value | number:0}}%</span><span class="title">{{title}}</span></div>'
