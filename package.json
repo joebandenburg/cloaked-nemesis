@@ -6,6 +6,9 @@
     "type": "git",
     "url": "git://github.com/joebandenburg/cloaked-nemesis.git"
   },
+  "scripts": {
+    "test": "gulp"
+  },
   "author": "Joe Bandenburg",
   "bugs": {
     "url": "https://github.com/joebandenburg/cloaked-nemesis/issues"
