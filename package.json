@@ -1,0 +1,16 @@
+{
+  "name": "cloaked-nemesis",
+  "version": "0.0.0",
+  "description": "",
+  "repository": {
+    "type": "git",
+    "url": "git://github.com/joebandenburg/cloaked-nemesis.git"
+  },
+  "author": "Joe Bandenburg",
+  "bugs": {
+    "url": "https://github.com/joebandenburg/cloaked-nemesis/issues"
+  },
+  "devDependencies": {
+    "gulp": "~3.8.9"
+  }
+}
