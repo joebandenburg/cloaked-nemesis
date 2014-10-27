@@ -9,7 +9,7 @@ app.factory('requestAnimationFrameLoop', function ($rootScope) {
                 callback(time);
             });
             requestAnimationFrame(loopCallback);
-        };
+        }
         requestAnimationFrame(loopCallback);
     };
 });
