@@ -8,7 +8,13 @@
         <script src="src/app.js"></script>
     </head>
     <body ng-controller="Main">
-        <dial title="shields" value="playerShip.shields.currentValue" colour="#23a9b8"></dial>
-        <dial title="power" value="80" colour="#B83223"></dial>
+        <dial title="shields"
+              value="playerShip.shields.currentValue"
+              colour="#23a9b8"></dial>
+        <dial title="power"
+              value="playerShip.power.currentValue"
+              min="0"
+              max="playerShip.power.maxValue"
+              colour="#B83223"></dial>
     </body>
 </html>

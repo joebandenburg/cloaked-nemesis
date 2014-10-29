@@ -20,9 +20,13 @@ app.controller('Main', function ($scope, requestAnimationFrameLoop) {
         shields: {
             maxValue: 100,
             currentValue: 0,
-            regenRate: 30
+            regenRate: 30,
+            powerUsage: 1000
         },
-        power: 100000
+        power: {
+            maxValue: 10000,
+            currentValue: 10000
+        }
     };
 
     $scope.enemyShip = {
@@ -43,11 +47,17 @@ app.controller('Main', function ($scope, requestAnimationFrameLoop) {
         time /= 1000;
         var timeDelta = time - lastTime;
         lastTime = time;
-
-        // Regen shields
-        if ($scope.playerShip.shields.currentValue < $scope.playerShip.shields.maxValue) {
-            $scope.playerShip.shields.currentValue += $scope.playerShip.shields.regenRate * timeDelta;
-            $scope.playerShip.shields.currentValue = Math.min($scope.playerShip.shields.maxValue, $scope.playerShip.shields.currentValue);
+        
+        // Use power
+        $scope.playerShip.power.currentValue -= $scope.playerShip.shields.powerUsage * timeDelta;
+        $scope.playerShip.power.currentValue = Math.max(0, $scope.playerShip.power.currentValue);
+        
+        if ($scope.playerShip.power.currentValue > 0) {
+            // Regen shields
+            if ($scope.playerShip.shields.currentValue < $scope.playerShip.shields.maxValue) {
+                $scope.playerShip.shields.currentValue += $scope.playerShip.shields.regenRate * timeDelta;
+                $scope.playerShip.shields.currentValue = Math.min($scope.playerShip.shields.maxValue, $scope.playerShip.shields.currentValue);
+            }
         }
 
         // Enemy fires
@@ -75,12 +85,25 @@ app.directive('dial', function () {
         var progressColour = '#23a9b8';
         var backgroundColour = '#333';
         var imageSize = 320;
+        var minValue, maxValue;
 
         scope.$watch('colour', function (value) {
             progressColour = value;
         });
 
+        scope.$watch('minValue', function (value) {
+            minValue = value;
+        });
+
+        scope.$watch('maxValue', function (value) {
+            maxValue = value;
+        });
+
         scope.$watch('value', function (value) {
+            if (minValue !== undefined && maxValue !== undefined) {
+                value = (value - minValue) / (maxValue - minValue) * 100;
+            }
+            scope.percentValue = value;
             var center = imageSize / 2;
             ctx.clearRect(0, 0, imageSize, imageSize);
             ctx.strokeStyle = backgroundColour;
@@ -99,9 +122,11 @@ app.directive('dial', function () {
         scope: {
             title: '@',
             value: '=',
+            minValue: '=min',
+            maxValue: '=max',
             colour: '@'
         },
         link: link,
-        template: '<div class="dial"><canvas width="320" height="320"></canvas><span class="value">{{value | number:0}}%</span><span class="title">{{title}}</span></div>'
+        template: '<div class="dial"><canvas width="320" height="320"></canvas><span class="value">{{percentValue | number:0}}%</span><span class="title">{{title}}</span></div>'
     };
 });
