@@ -9,6 +9,16 @@ body {
     display: flex;
 }
 
+.control {
+    cursor: pointer;
+    border: 1px solid transparent;
+}
+
+.control:hover {
+    background-color: #333;
+    border: 1px solid #23a9b8;
+}
+
 .dial {
     position: relative;
 }
