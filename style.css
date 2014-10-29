@@ -2,6 +2,7 @@ body {
     background-color: #222;
     color: #fff;
     font-family: 'Roboto Condensed', sans-serif;
+    -webkit-user-select: none;
 }
 
 .dial {

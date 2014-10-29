@@ -25,7 +25,8 @@ app.controller('Main', function ($scope, requestAnimationFrameLoop) {
         },
         power: {
             maxValue: 10000,
-            currentValue: 10000
+            currentValue: 10000,
+            boostValue: 1000
         }
     };
 
@@ -74,6 +75,11 @@ app.controller('Main', function ($scope, requestAnimationFrameLoop) {
     }
 
     requestAnimationFrameLoop(updateLoop);
+
+    $scope.recharge = function() {
+        $scope.playerShip.power.currentValue += $scope.playerShip.power.boostValue;
+        $scope.playerShip.power.currentValue = Math.min($scope.playerShip.power.maxValue, $scope.playerShip.power.currentValue);
+    };
 });
 
 app.directive('dial', function () {
