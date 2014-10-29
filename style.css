@@ -5,6 +5,10 @@ body {
     -webkit-user-select: none;
 }
 
+.container {
+    display: flex;
+}
+
 .dial {
     position: relative;
 }
