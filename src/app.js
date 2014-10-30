@@ -34,7 +34,8 @@ app.controller('Main', function ($scope, requestAnimationFrameLoop) {
         hull: {
             max: 100,
             value: 100,
-            regenRate: 1
+            regenRate: 1,
+            boost: 1
         }
     };
 
@@ -53,7 +54,8 @@ app.controller('Main', function ($scope, requestAnimationFrameLoop) {
         hull: {
             max: 100,
             value: 100,
-            regenRate: 1
+            regenRate: 1,
+            boost: 1
         },
         weapons: [{
             fireRate: 0.5,
@@ -120,9 +122,12 @@ app.controller('Main', function ($scope, requestAnimationFrameLoop) {
 
     requestAnimationFrameLoop(updateLoop);
 
-    $scope.recharge = function() {
-        $scope.playerShip.power.value += $scope.playerShip.power.boost;
-        $scope.playerShip.power.value = Math.min($scope.playerShip.power.max, $scope.playerShip.power.value);
+    $scope.rechargeHull = function() {
+        systemDelta($scope.playerShip.hull, $scope.playerShip.hull.boost);
+    };
+
+    $scope.rechargePower = function() {
+        systemDelta($scope.playerShip.power, $scope.playerShip.power.boost);
     };
 });
 

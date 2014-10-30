@@ -14,13 +14,14 @@
                   colour="#23a9b8"></dial>
             <dial title="hull"
                   value="playerShip.hull.value"
+                  ng-click="rechargeHull()"
                   colour="#99cc00"></dial>
             <dial title="power"
                   value="playerShip.power.value"
                   min="0"
                   max="playerShip.power.max"
                   colour="#B83223"
-                  ng-click="recharge()"
+                  ng-click="rechargePower()"
                   class="control"></dial>
         </div>
     </body>
