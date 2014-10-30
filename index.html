@@ -10,10 +10,13 @@
     <body ng-controller="Main">
         <div class="container">
             <dial title="shields"
-                  value="playerShipState.shields.value"
+                  value="playerShip.shields.value"
                   colour="#23a9b8"></dial>
+            <dial title="hull"
+                  value="playerShip.hull.value"
+                  colour="#99cc00"></dial>
             <dial title="power"
-                  value="playerShipState.power.value"
+                  value="playerShip.power.value"
                   min="0"
                   max="playerShip.power.max"
                   colour="#B83223"
