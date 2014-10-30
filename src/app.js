@@ -102,6 +102,8 @@ app.controller('Main', function ($scope, requestAnimationFrameLoop) {
             }
         }
 
+        systemDelta($scope.playerShip.hull, $scope.playerShip.hull.regenRate * timeDelta);
+
         // Enemy fires
         $scope.enemyShip.weapons.forEach(function (weapon) {
             if (weapon.lastFired + weapon.fireRate < time) {
