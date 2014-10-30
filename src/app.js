@@ -29,7 +29,8 @@ app.controller('Main', function ($scope, requestAnimationFrameLoop) {
         power: {
             max: 10000,
             value: 10000,
-            boost: 1000
+            boost: 1000,
+            regenRate: 0
         },
         hull: {
             max: 100,
@@ -49,7 +50,8 @@ app.controller('Main', function ($scope, requestAnimationFrameLoop) {
         power: {
             max: 10000,
             value: 10000,
-            boost: 0
+            boost: 0,
+            regenRate: 0
         },
         hull: {
             max: 100,
@@ -94,7 +96,8 @@ app.controller('Main', function ($scope, requestAnimationFrameLoop) {
         lastTime = time;
 
         // Use power
-        systemDelta($scope.playerShip.power, -$scope.playerShip.shields.powerUsage * timeDelta);
+        systemDelta($scope.playerShip.power,
+                    ($scope.playerShip.power.regenRate - $scope.playerShip.shields.powerUsage)* timeDelta);
 
         if ($scope.playerShip.power.value > 0) {
             // Regen shields
@@ -126,8 +129,15 @@ app.controller('Main', function ($scope, requestAnimationFrameLoop) {
         systemDelta($scope.playerShip.hull, $scope.playerShip.hull.boost);
     };
 
-    $scope.rechargePower = function() {
-        systemDelta($scope.playerShip.power, $scope.playerShip.power.boost);
+    $scope.rechargePower = function($event) {
+        if ($event.button === 0)
+        {
+            systemDelta($scope.playerShip.power, $scope.playerShip.power.boost);
+        }
+        else
+        {
+            $scope.playerShip.power.regenRate += 5;
+        }
     };
 });
 
