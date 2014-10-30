@@ -10,12 +10,12 @@
     <body ng-controller="Main">
         <div class="container">
             <dial title="shields"
-                  value="playerShip.shields.currentValue"
+                  value="playerShipState.shields.value"
                   colour="#23a9b8"></dial>
             <dial title="power"
-                  value="playerShip.power.currentValue"
+                  value="playerShipState.power.value"
                   min="0"
-                  max="playerShip.power.maxValue"
+                  max="playerShip.power.max"
                   colour="#B83223"
                   ng-click="recharge()"
                   class="control"></dial>

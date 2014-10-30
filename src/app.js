@@ -1,5 +1,9 @@
 // Everything is in seconds. You noob.
 
+/*global angular:false*/
+/*global requestAnimationFrame:false*/
+/*global performance:false*/
+
 var app = angular.module('clockedNemesis', []);
 
 app.factory('requestAnimationFrameLoop', function ($rootScope) {
@@ -16,24 +20,35 @@ app.factory('requestAnimationFrameLoop', function ($rootScope) {
 
 app.controller('Main', function ($scope, requestAnimationFrameLoop) {
     $scope.playerShip = {
-        hp: 1000,
         shields: {
-            maxValue: 100,
-            currentValue: 0,
+            max: 100,
             regenRate: 30,
             powerUsage: 1000
         },
         power: {
-            maxValue: 10000,
-            currentValue: 10000,
-            boostValue: 1000
+            max: 10000,
+            boost: 1000
+        },
+        hull: {
+            max: 100,
+            regenRate: 1
         }
     };
 
     $scope.enemyShip = {
-        hp: 1000,
-        shields: 100,
-        power: 100000,
+        shields: {
+            max: 100,
+            regenRate: 0,
+            powerUsage: 1000
+        },
+        power: {
+            max: 10000,
+            boost: 0
+        },
+        hull: {
+            max: 100,
+            regenRate: 1
+        },
         weapons: [{
             fireRate: 0.5,
             lastFired: 0,
@@ -42,22 +57,34 @@ app.controller('Main', function ($scope, requestAnimationFrameLoop) {
         }]
     };
 
+    $scope.playerShipState = {
+        shields: {
+            value: 0
+        },
+        power: {
+            value: 10000
+        },
+        hull: {
+            value: 0
+        }
+    };
+
     var lastTime = performance.now() / 1000;
 
     function updateLoop(time) {
         time /= 1000;
         var timeDelta = time - lastTime;
         lastTime = time;
-        
+
         // Use power
-        $scope.playerShip.power.currentValue -= $scope.playerShip.shields.powerUsage * timeDelta;
-        $scope.playerShip.power.currentValue = Math.max(0, $scope.playerShip.power.currentValue);
-        
-        if ($scope.playerShip.power.currentValue > 0) {
+        $scope.playerShipState.power.value -= $scope.playerShip.shields.powerUsage * timeDelta;
+        $scope.playerShipState.power.value = Math.max(0, $scope.playerShipState.power.value);
+
+        if ($scope.playerShipState.power.value > 0) {
             // Regen shields
-            if ($scope.playerShip.shields.currentValue < $scope.playerShip.shields.maxValue) {
-                $scope.playerShip.shields.currentValue += $scope.playerShip.shields.regenRate * timeDelta;
-                $scope.playerShip.shields.currentValue = Math.min($scope.playerShip.shields.maxValue, $scope.playerShip.shields.currentValue);
+            if ($scope.playerShipState.shields.value < $scope.playerShip.shields.max) {
+                $scope.playerShipState.shields.value += $scope.playerShip.shields.regenRate * timeDelta;
+                $scope.playerShipState.shields.value = Math.min($scope.playerShip.shields.max, $scope.playerShipState.shields.value);
             }
         }
 
@@ -67,8 +94,8 @@ app.controller('Main', function ($scope, requestAnimationFrameLoop) {
                 weapon.lastFired = time;
                 var wasHit = Math.random() < weapon.hitProbability;
                 if (wasHit) {
-                    $scope.playerShip.shields.currentValue -= weapon.damage;
-                    $scope.playerShip.shields.currentValue = Math.max(0, $scope.playerShip.shields.currentValue);
+                    $scope.playerShipState.shields.value -= weapon.damage;
+                    $scope.playerShipState.shields.value = Math.max(0, $scope.playerShipState.shields.value);
                 }
             }
         });
@@ -77,8 +104,8 @@ app.controller('Main', function ($scope, requestAnimationFrameLoop) {
     requestAnimationFrameLoop(updateLoop);
 
     $scope.recharge = function() {
-        $scope.playerShip.power.currentValue += $scope.playerShip.power.boostValue;
-        $scope.playerShip.power.currentValue = Math.min($scope.playerShip.power.maxValue, $scope.playerShip.power.currentValue);
+        $scope.playerShipState.power.value += $scope.playerShip.power.boost;
+        $scope.playerShipState.power.value = Math.min($scope.playerShip.power.max, $scope.playerShipState.power.value);
     };
 });
 
