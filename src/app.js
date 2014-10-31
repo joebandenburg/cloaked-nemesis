@@ -2,19 +2,7 @@
 (function() {
     'use strict';
 
-    var app = angular.module('clockedNemesisApp', ['clockedNemesisDirectives']);
-
-    app.factory('requestAnimationFrameLoop', function ($rootScope) {
-        return function (callback) {
-            function loopCallback(time) {
-                $rootScope.$apply(function () {
-                    callback(time);
-                });
-                requestAnimationFrame(loopCallback);
-            }
-            requestAnimationFrame(loopCallback);
-        };
-    });
+    var app = angular.module('clockedNemesisApp', ['clockedNemesisDirectives', 'clockedNemesisServices']);
 
     app.controller('Main', function ($scope, requestAnimationFrameLoop) {
         $scope.playerShip = {
