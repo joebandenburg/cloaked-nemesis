@@ -4,7 +4,7 @@
 
     var app = angular.module('clockedNemesisApp', ['clockedNemesisDirectives', 'clockedNemesisServices']);
 
-    app.filter('si', function() {
+    app.filter('si', function(numberFilter) {
         var siUnits = ['', 'k', 'M', 'G', 'T', 'P', 'E', 'Z', 'Y'];
         return function(input) {
             var siUnitIndex = 0;
@@ -13,10 +13,10 @@
                 var magnitude = Math.round(Math.log(Math.abs(input)) / Math.LN10);
                 magnitude = Math.min(26, magnitude);
                 magnitude = Math.floor(magnitude / 3);
-                input /= Math.pow(10, magnitude * 3);
+                input = input / Math.pow(10, magnitude * 3);
                 siUnitIndex = magnitude;
             }
-            return input.toFixed(0) + siUnits[siUnitIndex];
+            return numberFilter(input) + siUnits[siUnitIndex];
         };
     });
 
@@ -137,7 +137,7 @@
             }
             else
             {
-                $scope.playerShip.power.regenRate += 5;
+                $scope.playerShip.power.regenRate += 50;
             }
         };
         
