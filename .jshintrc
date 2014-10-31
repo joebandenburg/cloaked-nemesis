@@ -1,3 +1,16 @@
 {
-    "curly": true
+    "curly": true,
+    "eqeqeq": true,
+    "freeze": true,
+    "latedef": true,
+    "noarg": true,
+    "nonbsp": true,
+    "quotmark": "single",
+    "undef": true,
+    "unused": true,
+    "strict": true,
+    "browser": true,
+    "globals": {
+        "angular": true
+    }
 }
