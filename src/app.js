@@ -9,12 +9,12 @@
         return function(input) {
             var siUnitIndex = 0;
             if (input !== 0) {
-                var magnitude = Math.round(Math.log(Math.abs(input)) / Math.LN10); // Pop pop
-                if (magnitude > 2) {
-                    magnitude = Math.min(26, magnitude);
-                    input /= Math.pow(10, Math.floor(magnitude / 3) * 3);
-                    siUnitIndex = Math.floor(magnitude / 3);
-                }
+                // Pop pop
+                var magnitude = Math.round(Math.log(Math.abs(input)) / Math.LN10);
+                magnitude = Math.min(26, magnitude);
+                magnitude = Math.floor(magnitude / 3);
+                input /= Math.pow(10, magnitude * 3);
+                siUnitIndex = magnitude;
             }
             return input.toFixed(0) + siUnits[siUnitIndex];
         };
