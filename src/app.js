@@ -102,7 +102,6 @@ app.controller('Main', function ($scope, requestAnimationFrameLoop) {
         if ($scope.playerShip.power.value > 0) {
             // Regen shields
             if ($scope.playerShip.shields.value < $scope.playerShip.shields.max) {
-
                 systemDelta($scope.playerShip.shields, $scope.playerShip.shields.regenRate * timeDelta);
             }
         }
