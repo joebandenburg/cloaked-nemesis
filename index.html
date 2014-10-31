@@ -11,6 +11,9 @@
     </head>
     <body ng-controller="Main">
         <div class="container">
+            <div class="green">+{{powerProduction() | si}}</div>
+            <div class="red">-{{powerConsumption() | si}}</div>
+            <div>{{powerOutput() | si}}</div>
             <dial title="shields"
                   value="playerShip.shields.value"
                   colour="#23a9b8"></dial>

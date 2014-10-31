@@ -4,6 +4,22 @@
 
     var app = angular.module('clockedNemesisApp', ['clockedNemesisDirectives', 'clockedNemesisServices']);
 
+    app.filter('si', function() {
+        var siUnits = ['', 'k', 'M', 'G', 'T', 'P', 'E', 'Z', 'Y'];
+        return function(input) {
+            var siUnitIndex = 0;
+            if (input !== 0) {
+                var magnitude = Math.round(Math.log(Math.abs(input)) / Math.LN10); // Pop pop
+                if (magnitude > 2) {
+                    magnitude = Math.min(26, magnitude);
+                    input /= Math.pow(10, Math.floor(magnitude / 3) * 3);
+                    siUnitIndex = Math.floor(magnitude / 3);
+                }
+            }
+            return input.toFixed(0) + siUnits[siUnitIndex];
+        };
+    });
+
     app.controller('Main', function ($scope, requestAnimationFrameLoop) {
         $scope.playerShip = {
             shields: {
@@ -123,6 +139,20 @@
             {
                 $scope.playerShip.power.regenRate += 5;
             }
+        };
+        
+        $scope.powerProduction = function() {
+            // TODO: Calculate this properly
+            return $scope.playerShip.power.regenRate;
+        };
+        
+        $scope.powerConsumption = function() {
+            // TODO: Calculate this properly
+            return $scope.playerShip.shields.powerUsage;
+        };
+        
+        $scope.powerOutput = function() {
+            return $scope.powerProduction() - $scope.powerConsumption();
         };
     });
 })();

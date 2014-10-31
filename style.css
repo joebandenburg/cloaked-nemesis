@@ -44,3 +44,11 @@ body {
     opacity: 0.8;
     align-items: flex-end;
 }
+
+.green {
+    color: #99cc00;
+}
+
+.red {
+    color: #B83223;
+}
