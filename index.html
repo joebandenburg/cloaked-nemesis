@@ -10,6 +10,9 @@
         <script src="src/app.js"></script>
     </head>
     <body ng-controller="Main">
+          <div class="Money">
+              <div class="green">{{gameState.money.toFixed()}} credits</div>
+          </div>
         <div class="power control" ng-click="rechargePower($event)">
             <dial title="power"
                   value="playerShip.power.value"

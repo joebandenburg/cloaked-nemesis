@@ -1,4 +1,5 @@
 // Everything is in seconds. You noob.
+
 (function() {
     'use strict';
 
@@ -21,6 +22,11 @@
     });
 
     app.controller('Main', function ($scope, requestAnimationFrameLoop) {
+        $scope.gameState = {
+            money: 0,
+            moneyRate: 1
+        };
+
         $scope.playerShip = {
             shields: {
                 max: 100,
@@ -97,6 +103,9 @@
             var timeDelta = time - lastTime;
             lastTime = time;
 
+            // Get money
+            $scope.gameState.money += $scope.gameState.moneyRate * timeDelta;
+
             // Use power
             systemDelta($scope.playerShip.power,
                         ($scope.playerShip.power.regenRate - $scope.playerShip.shields.powerUsage)* timeDelta);
@@ -140,17 +149,17 @@
                 $scope.playerShip.power.regenRate += 50;
             }
         };
-        
+
         $scope.powerProduction = function() {
             // TODO: Calculate this properly
             return $scope.playerShip.power.regenRate;
         };
-        
+
         $scope.powerConsumption = function() {
             // TODO: Calculate this properly
             return $scope.playerShip.shields.powerUsage;
         };
-        
+
         $scope.powerOutput = function() {
             return $scope.powerProduction() - $scope.powerConsumption();
         };
