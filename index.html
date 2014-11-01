@@ -10,10 +10,19 @@
         <script src="src/app.js"></script>
     </head>
     <body ng-controller="Main">
+        <div class="power control" ng-click="rechargePower($event)">
+            <dial title="power"
+                  value="playerShip.power.value"
+                  min="0"
+                  max="playerShip.power.max"
+                  colour="#B83223"></dial>
+            <div class="stats">
+                <div class="green">+{{powerProduction() | si}}</div>
+                <div class="red">-{{powerConsumption() | si}}</div>
+                <div>{{powerOutput() | si}}</div>
+            </div>
+        </div>
         <div class="container">
-            <div class="green">+{{powerProduction() | si}}</div>
-            <div class="red">-{{powerConsumption() | si}}</div>
-            <div>{{powerOutput() | si}}</div>
             <dial title="shields"
                   value="playerShip.shields.value"
                   colour="#23a9b8"></dial>
@@ -21,13 +30,6 @@
                   value="playerShip.hull.value"
                   ng-click="rechargeHull()"
                   colour="#99cc00"></dial>
-            <dial title="power"
-                  value="playerShip.power.value"
-                  min="0"
-                  max="playerShip.power.max"
-                  colour="#B83223"
-                  ng-click="rechargePower($event)"
-                  class="control"></dial>
         </div>
     </body>
 </html>

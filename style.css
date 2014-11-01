@@ -21,12 +21,17 @@ body {
 
 .dial {
     position: relative;
+    width: 200px;
+    height: 200px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
 }
 
 .dial > span {
     position: absolute;
     left: 0;
-    width: 320px;
+    width: 200px;
     top: 0;
     bottom: 0;
     display: flex;
@@ -51,4 +56,11 @@ body {
 
 .red {
     color: #B83223;
+}
+
+.power {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 400px;
 }

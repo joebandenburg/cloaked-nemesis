@@ -7,11 +7,11 @@
         function link(scope, element) {
             var canvas = element.find('canvas')[0];
             var ctx = canvas.getContext('2d');
-            var radius = 100;
+            var radius = 58;
             var width = 2;
             var progressColour = '#23a9b8';
             var backgroundColour = '#333';
-            var imageSize = 320;
+            var imageSize = 120;
             var minValue, maxValue;
 
             scope.$watch('colour', function (value) {
@@ -54,7 +54,7 @@
                 colour: '@'
             },
             link: link,
-            template: '<div class="dial"><canvas width="320" height="320"></canvas><span class="value">{{percentValue | number:0}}%</span><span class="title">{{title}}</span></div>'
+            template: '<div class="dial"><canvas width="120" height="120"></canvas><span class="value">{{percentValue | number:0}}%</span><span class="title">{{title}}</span></div>'
         };
     });
 })();
