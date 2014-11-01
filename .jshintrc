@@ -11,6 +11,7 @@
     "strict": true,
     "browser": true,
     "globals": {
-        "angular": true
+        "angular": true,
+        "_": true
     }
 }
