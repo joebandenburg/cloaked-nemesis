@@ -21,7 +21,7 @@
         };
     });
 
-    app.controller('Main', function ($scope, requestAnimationFrameLoop, upgrades) {
+    app.controller('Main', function ($scope, requestAnimationFrameLoop, UpgradeTypesData, UpgradeOrder) {
         $scope.gameState = {
             money: 0,
             moneyRate: 10
@@ -49,7 +49,7 @@
             upgrades: { }
         };
 
-        _.each(upgrades, function (value, key) {
+        _.each(UpgradeTypesData, function (value, key) {
             $scope.playerShip.upgrades[key] = 0;
         });
 
@@ -66,11 +66,11 @@
                 });
             });
 
-            _.each($scope.playerShip.upgrades, function (level, upgradeName) {
-                var upgrade = upgrades[upgradeName];
+            _.each(UpgradeOrder, function (upgrade) {
+                var upgradeLevel = $scope.playerShip.upgrades[upgrade.name];
                 _.each(upgrade.modifier, function (modifierFn, modifierName) {
-                    _.times(level, function() {
-                        $scope.playerShip[upgrade.system][modifierName] += modifierFn(level);
+                    _.times(upgradeLevel, function() {
+                        $scope.playerShip[upgrade.system][modifierName] += modifierFn(upgradeLevel);
                     });
                 });
             });
@@ -79,7 +79,7 @@
         calculateShipStats();
 
         function buyUpgrade(upgradeName) {
-            var upgrade = upgrades[upgradeName];
+            var upgrade = UpgradeTypesData[upgradeName];
             var nextUpgradeLevel = $scope.playerShip.upgrades[upgradeName] + 1;
             var nextUpgradeCost = upgrade.cost(nextUpgradeLevel);
             if ($scope.gameState.money >= nextUpgradeCost)
@@ -188,7 +188,7 @@
             }
             else
             {
-                buyUpgrade('powerRegenRate');
+                buyUpgrade('PowerRegenRate');
             }
         };
 
