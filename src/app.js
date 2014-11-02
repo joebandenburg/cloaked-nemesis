@@ -3,7 +3,7 @@
 (function() {
     'use strict';
 
-    var app = angular.module('clockedNemesisApp', ['clockedNemesisDirectives', 'clockedNemesisServices']);
+    var app = angular.module('clockedNemesisApp', ['clockedNemesisDirectives', 'clockedNemesisServices', 'clockedNemesisUpgrades']);
 
     app.filter('si', function(numberFilter) {
         var siUnits = ['', 'k', 'M', 'G', 'T', 'P', 'E', 'Z', 'Y'];
@@ -21,32 +21,74 @@
         };
     });
 
-    app.controller('Main', function ($scope, requestAnimationFrameLoop) {
+    app.controller('Main', function ($scope, requestAnimationFrameLoop, UpgradeTypesData, UpgradeOrder) {
         $scope.gameState = {
             money: 0,
-            moneyRate: 1
+            moneyRate: 10
         };
 
-        $scope.playerShip = {
+        $scope.playerShipBaseStats = {
             shields: {
                 max: 100,
-                value: 100,
                 regenRate: 30,
                 powerUsage: 1000
             },
             power: {
                 max: 10000,
-                value: 10000,
                 boost: 1000,
                 regenRate: 0
             },
             hull: {
                 max: 100,
-                value: 100,
                 regenRate: 1,
                 boost: 1
             }
         };
+
+        $scope.playerShip = {
+            upgrades: { }
+        };
+
+        _.each(UpgradeTypesData, function (value, key) {
+            $scope.playerShip.upgrades[key] = 0;
+        });
+
+        _.each($scope.playerShipBaseStats, function (baseSystemStats, systemName) {
+            $scope.playerShip[systemName] = {
+                value: baseSystemStats.max || 0
+            };
+        });
+
+        function calculateShipStats() {
+            _.each($scope.playerShipBaseStats, function (baseSystemStats, systemName) {
+                _.each(baseSystemStats, function (statValue, statName) {
+                    $scope.playerShip[systemName][statName] = _.cloneDeep(statValue);
+                });
+            });
+
+            _.each(UpgradeOrder, function (upgrade) {
+                var upgradeLevel = $scope.playerShip.upgrades[upgrade.name];
+                _.each(upgrade.modifier, function (modifierFn, modifierName) {
+                    _.times(upgradeLevel, function() {
+                        $scope.playerShip[upgrade.system][modifierName] += modifierFn(upgradeLevel);
+                    });
+                });
+            });
+        }
+
+        calculateShipStats();
+
+        function buyUpgrade(upgradeName) {
+            var upgrade = UpgradeTypesData[upgradeName];
+            var nextUpgradeLevel = $scope.playerShip.upgrades[upgradeName] + 1;
+            var nextUpgradeCost = upgrade.cost(nextUpgradeLevel);
+            if ($scope.gameState.money >= nextUpgradeCost)
+            {
+                $scope.gameState.money -= nextUpgradeCost;
+                $scope.playerShip.upgrades[upgradeName] = nextUpgradeLevel;
+                calculateShipStats();
+            }
+        }
 
         $scope.enemyShip = {
             shields: {
@@ -146,7 +188,7 @@
             }
             else
             {
-                $scope.playerShip.power.regenRate += 50;
+                buyUpgrade('PowerRegenRate');
             }
         };
 
