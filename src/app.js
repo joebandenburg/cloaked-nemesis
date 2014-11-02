@@ -53,9 +53,13 @@
             $scope.playerShip.upgrades[key] = 0;
         });
 
+        var numTailSamples = 10;
+
         _.each($scope.playerShipBaseStats, function (baseSystemStats, systemName) {
             $scope.playerShip[systemName] = {
-                value: baseSystemStats.max || 0
+                value: baseSystemStats.max || 0,
+                tailValue: baseSystemStats.max || 0,
+                tailSamples: new Array(numTailSamples)
             };
         });
 
@@ -173,6 +177,16 @@
                     }
                 }
             });
+
+            var maxSample = 0;
+            _.times(numTailSamples, function (index) {
+                maxSample = Math.max(maxSample, $scope.playerShip.shields.tailSamples[index]);
+            });
+
+            $scope.playerShip.shields.tailValue = Math.max(maxSample, $scope.playerShip.shields.value);
+
+            var currentSample = Math.floor((time - Math.floor(time)) * numTailSamples);
+            $scope.playerShip.shields.tailSamples[currentSample] = $scope.playerShip.shields.value;
         }
 
         requestAnimationFrameLoop(updateLoop);
