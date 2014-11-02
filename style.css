@@ -4,10 +4,24 @@ body {
     font-family: 'Roboto', sans-serif;
     -webkit-user-select: none;
     font-size: 13px;
+    margin: 0;
 }
 
-.container {
+* {
+    box-sizing: border-box;
+}
+
+header {
     display: flex;
+    height: 48px;
+    line-height: 48px;
+    font-size: 24px;
+    background-color: #ccc;
+    color: #222;
+}
+
+header > span {
+    margin: 0 8px;
 }
 
 .control {
@@ -25,7 +39,7 @@ body {
 }
 
 .system {
-    margin: 8px;
+    margin: 16px;
     display: flex;
 }
 
