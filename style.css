@@ -120,6 +120,11 @@ header > .left-bar {
     height: 192px;
 }
 
+.player-ship .system {
+    background-color: #272727;
+    box-shadow: 0 2px 5px 0 rgba(0, 0, 0, 0.26);
+}
+
 .controls {
     display: flex;
     flex-direction: column;
@@ -143,6 +148,9 @@ dial {
     display: flex;
     justify-content: center;
     align-items: center;
+}
+
+.player-ship dial {
     border: 1px solid #444;
 }
 
