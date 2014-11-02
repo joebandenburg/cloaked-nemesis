@@ -19,16 +19,18 @@ body {
     border: 1px solid #23a9b8;
 }
 
-.dial {
+dial {
+    display: block;
     position: relative;
     width: 200px;
     height: 200px;
     display: flex;
     justify-content: center;
     align-items: center;
+    
 }
 
-.dial > span {
+dial > span {
     position: absolute;
     left: 0;
     width: 200px;
@@ -39,12 +41,12 @@ body {
     align-items: center;
 }
 
-.dial > .value {
+dial > .value {
     font-weight: 100;
     font-size: 45px;
 }
 
-.dial > .title {
+dial > .title {
     font-size: 25px;
     text-transform:  uppercase;
     opacity: 0.8;
