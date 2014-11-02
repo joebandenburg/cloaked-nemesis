@@ -31,7 +31,9 @@
             shields: {
                 max: 100,
                 regenRate: 5,
-                powerUsage: 1000
+                powerUsage: 1000,
+                boost: 2,
+                boostPower: 100
             },
             power: {
                 max: 10000,
@@ -211,8 +213,7 @@
                         damage = systemHit($scope.enemyShip.shields, damage);
                         damage = systemHit($scope.enemyShip.hull, damage);
 
-                        if (damage > 0)
-                        {
+                        if (damage > 0) {
                             $scope.enemyShip = getNewEnemyShip($scope.enemyShip.level + 1);
                         }
                     }
@@ -234,6 +235,19 @@
             else
             {
                 buyUpgrade('PowerRegenRate');
+            }
+        };
+
+        $scope.rechargeShields = function($event) {
+            if ($event.button === 0) {
+                if ($scope.playerShip.power.value > 0) {
+                    systemDelta($scope.playerShip.power, -$scope.playerShip.shields.boostPower);
+                    systemDelta($scope.playerShip.shields, $scope.playerShip.shields.boost);
+                }
+            }
+            else
+            {
+                buyUpgrade('ShieldsRegenRate');
             }
         };
 

@@ -18,13 +18,24 @@
             'cost': getExpUpgradeFn(1.1, 3),
             'modifier':
             {
-                'regenRate': getExpUpgradeFn(1.05, 10)
+                'regenRate': getExpUpgradeFn(1.05, 3)
+            }
+        },
+        'ShieldsRegenRate': {
+            'system': 'shields',
+            'title': 'regen rate',
+            'cost': getExpUpgradeFn(1.1, 10),
+            'modifier':
+            {
+                'regenRate': getExpUpgradeFn(1.05, 0.1),
+                'powerUsage': getExpUpgradeFn(1.05, 15)
             }
         }
     };
 
     var UpgradeOrder = [
-        UpgradeTypesData.PowerRegenRate
+        UpgradeTypesData.PowerRegenRate,
+        UpgradeTypesData.ShieldsRegenRate
     ];
 
     _.each(UpgradeTypesData, function (upgradeTypeData, upgradeName) {
