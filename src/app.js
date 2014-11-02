@@ -109,7 +109,10 @@
             }
         }
 
-        $scope.enemyShip = {
+        function getNewEnemyShip(level)
+        {
+            return {
+            level: level,
             shields: {
                 max: 0,
                 value: 0,
@@ -123,19 +126,22 @@
                 regenRate: 0
             },
             hull: {
-                max: 100,
-                value: 100,
-                regenRate: 1,
+                max: 100 + (5 * level),
+                value: 100 + (5 * level),
+                regenRate: 0.1 * level,
                 boost: 1
             },
             weapons: [{
-                fireRate: 3,
+                fireRate: 3 - Math.min(level * 0.1, 2),
                 lastFired: 0,
-                damage: 20,
+                damage: 20 + (2 * level),
                 hitProbability: 0.8,
                 value: 0
             }]
         };
+        }
+
+        $scope.enemyShip = getNewEnemyShip(1);
 
         var lastTime = window.performance.now() / 1000;
 
@@ -193,6 +199,8 @@
                 }
             });
 
+            systemDelta($scope.enemyShip.hull, $scope.enemyShip.hull.regenRate * timeDelta);
+
             // Player fires
             $scope.playerShip.weapons.forEach(function (weapon) {
                 if (weapon.lastFired + weapon.fireRate < time) {
@@ -202,6 +210,11 @@
                         var damage = weapon.damage;
                         damage = systemHit($scope.enemyShip.shields, damage);
                         damage = systemHit($scope.enemyShip.hull, damage);
+
+                        if (damage > 0)
+                        {
+                            $scope.enemyShip = getNewEnemyShip($scope.enemyShip.level + 1);
+                        }
                     }
                 }
             });
@@ -237,7 +250,7 @@
         $scope.powerOutput = function() {
             return $scope.powerProduction() - $scope.powerConsumption();
         };
-        
+
         $scope.weaponCharge = function(weapon) {
             return ((lastTime - weapon.lastFired) / weapon.fireRate) * 100;
         };

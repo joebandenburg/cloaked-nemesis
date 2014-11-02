@@ -46,11 +46,11 @@
         </section>
         <section>
             <div class="left-bar">
-                <h4>Enemy ship</h4>
+                <h4>Enemy ship {{enemyShip.level}}</h4>
             </div>
             <div class="systems">
                 <div class="system">
-                    <dial title="hull" value="enemyShip.hull.value" colour="#99cc00"></dial>
+                    <dial title="hull" value="enemyShip.hull.value" min="0" max="enemyShip.hull.max" colour="#99cc00"></dial>
                     <dial title="weapon" value="weaponCharge(enemyShip.weapons[0])" colour="#B83223"></dial>
                 </div>
             </div>
