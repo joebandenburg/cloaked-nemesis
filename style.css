@@ -3,6 +3,7 @@ body {
     color: #fff;
     font-family: 'Roboto', sans-serif;
     -webkit-user-select: none;
+    font-size: 13px;
 }
 
 .container {
@@ -27,30 +28,32 @@ dial {
     display: flex;
     justify-content: center;
     align-items: center;
-    
+    border: 1px solid #444;
+    margin: 10px;
 }
 
 dial > span {
     position: absolute;
+}
+
+dial > .value {
     left: 0;
     width: 200px;
     top: 0;
     bottom: 0;
+    font-weight: 100;
+    font-size: 45px;
     display: flex;
     justify-content: center;
     align-items: center;
 }
 
-dial > .value {
-    font-weight: 100;
-    font-size: 45px;
-}
-
 dial > .title {
-    font-size: 25px;
+    top: 0;
+    left: 4px;
+    font-size: 15px;
     text-transform:  uppercase;
     opacity: 0.8;
-    align-items: flex-end;
 }
 
 .green {
