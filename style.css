@@ -87,6 +87,7 @@ h6 {
 
 .left-bar {
     width: 384px;
+    min-width: 384px;
     padding: 0 8px;
     border-right: 1px solid #333;
     background-color: #121212;
@@ -135,6 +136,7 @@ header > .left-bar {
 dial {
     display: block;
     position: relative;
+    min-width: 192px;
     width: 192px;
     height: 192px;
     display: flex;
