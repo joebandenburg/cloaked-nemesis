@@ -22,37 +22,79 @@ header {
     font-size: 24px;
     background-color: #ccc;
     color: #222;
-    z-index: 1;
+}
+
+article {
+    position: fixed;
+    top: 48px;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    overflow-x: hidden;
+    overflow-y: auto;
+    display: flex;
+    flex-direction: column;
 }
 
 section {
     display: flex;
     border-top: 1px solid #333;
+    min-height: -webkit-min-content;
+    min-height: min-content;
 }
 
-section:first-of-type {
-    margin-top: 48px;
+section:first-child {
     border-top: none;
 }
 
-h1 {
-    font-size: 34px;
+section:last-child {
+    flex-grow: 1;
+}
+
+h1, h2, h3, h4, h5, h6 {
     margin: 0;
 }
 
+h1 {
+    font-size: 56px;
+    font-weight: 400;
+}
+
 h2 {
+    font-size: 45px;
+    font-weight: 400;
+}
+
+h3 {
+    font-size: 34px;
+    font-weight: 400;
+}
+
+h4 {
     font-size: 24px;
-    margin: 0;
+    font-weight: 400;
+}
+
+h5 {
+    font-size: 20px;
+    font-weight: 500;
+}
+
+h6 {
+    font-size: 15px;
+    font-weight: 400;
 }
 
 .left-bar {
     width: 384px;
     padding: 0 8px;
     border-right: 1px solid #333;
+    background-color: #121212;
 }
 
 header > .left-bar {
     border-color: #888;
+    background-color: inherit;
 }
 
 .control {
@@ -73,6 +115,7 @@ header > .left-bar {
 .system {
     margin: 8px;
     display: flex;
+    height: 192px;
 }
 
 .controls {
