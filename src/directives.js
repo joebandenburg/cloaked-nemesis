@@ -54,7 +54,7 @@
                 colour: '@'
             },
             link: link,
-            template: '<div class="dial"><canvas width="120" height="120"></canvas><span class="value">{{percentValue | number:0}}%</span><span class="title">{{title}}</span></div>'
+            template: '<canvas width="120" height="120"></canvas><span class="value">{{percentValue | number:0}}%</span><span class="title">{{title}}</span>'
         };
     });
 })();

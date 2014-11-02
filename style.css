@@ -1,53 +1,181 @@
 body {
     background-color: #222;
     color: #fff;
-    font-family: 'Roboto Condensed', sans-serif;
+    font-family: 'Roboto', sans-serif;
     -webkit-user-select: none;
+    font-size: 13px;
+    margin: 0;
 }
 
-.container {
+* {
+    box-sizing: border-box;
+}
+
+header {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
     display: flex;
+    height: 64px;
+    line-height: 64px;
+    font-size: 24px;
+    background-color: #ccc;
+    color: #222;
+}
+
+article {
+    position: fixed;
+    top: 64px;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    overflow-x: hidden;
+    overflow-y: auto;
+    display: flex;
+    flex-direction: column;
+}
+
+section {
+    display: flex;
+    border-top: 1px solid #333;
+    min-height: -webkit-min-content;
+    min-height: min-content;
+}
+
+section:first-child {
+    border-top: none;
+}
+
+section:last-child {
+    flex-grow: 1;
+}
+
+h1, h2, h3, h4, h5, h6 {
+    margin: 0;
+}
+
+h1 {
+    font-size: 56px;
+    font-weight: 400;
+}
+
+h2 {
+    font-size: 45px;
+    font-weight: 400;
+}
+
+h3 {
+    font-size: 34px;
+    font-weight: 400;
+}
+
+h4 {
+    font-size: 24px;
+    font-weight: 400;
+}
+
+h5 {
+    font-size: 20px;
+    font-weight: 500;
+}
+
+h6 {
+    font-size: 15px;
+    font-weight: 400;
+}
+
+.left-bar {
+    width: 384px;
+    min-width: 384px;
+    padding: 24px;
+    border-right: 1px solid #333;
+    background-color: #121212;
+}
+
+header > .left-bar {
+    border-color: #888;
+    background-color: inherit;
+    padding: 0 24px;
 }
 
 .control {
     cursor: pointer;
-    border: 1px solid transparent;
 }
 
 .control:hover {
     background-color: #333;
-    border: 1px solid #23a9b8;
+    border-color: #23a9b8;
 }
 
-.dial {
+.systems {
+    display: flex;
+    flex-wrap: wrap;
+    padding: 8px;
+}
+
+.system {
+    margin: 8px;
+    display: flex;
+    height: 192px;
+}
+
+.player-ship .system {
+    background-color: #272727;
+    box-shadow: 0 2px 5px 0 rgba(0, 0, 0, 0.26);
+}
+
+.controls {
+    display: flex;
+    flex-direction: column;
+    border-top: 1px solid #444;
+    border-bottom: 1px solid #444;
+    border-right: 1px solid #444;
+    min-width: 64px;
+}
+
+.controls span {
+    padding: 4px;
+    border-bottom: 1px solid #444;
+}
+
+dial {
+    display: block;
     position: relative;
-    width: 200px;
-    height: 200px;
+    min-width: 192px;
+    width: 192px;
+    height: 192px;
     display: flex;
     justify-content: center;
     align-items: center;
 }
 
-.dial > span {
+.player-ship dial {
+    border: 1px solid #444;
+}
+
+dial > span {
     position: absolute;
+}
+
+dial > .value {
     left: 0;
-    width: 200px;
+    width: 192px;
     top: 0;
     bottom: 0;
+    font-weight: 100;
+    font-size: 34px;
     display: flex;
     justify-content: center;
     align-items: center;
 }
 
-.dial > .value {
-    font-size: 50px;
-}
-
-.dial > .title {
-    font-size: 25px;
+dial > .title {
+    top: 0;
+    left: 4px;
+    font-size: 15px;
     text-transform:  uppercase;
     opacity: 0.8;
-    align-items: flex-end;
 }
 
 .green {
@@ -58,9 +186,6 @@ body {
     color: #B83223;
 }
 
-.power {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    width: 400px;
+.text-right {
+    text-align: right;
 }

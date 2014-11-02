@@ -1,40 +1,57 @@
 <!DOCTYPE html>
 <html lang="en" ng-app="clockedNemesisApp">
-    <head>
-        <meta charset="utf-8">
-        <link href="http://fonts.googleapis.com/css?family=Roboto+Condensed" rel="stylesheet" type="text/css">
-        <link rel="stylesheet" href="style.css" type="text/css">
-        <script src="bower_components/angular/angular.min.js"></script>
-        <script src="bower_components/lodash/dist/lodash.min.js"></script>
-        <script src="src/directives.js"></script>
-        <script src="src/services.js"></script>
-        <script src="src/upgrades.js"></script>
-        <script src="src/app.js"></script>
-    </head>
-    <body ng-controller="Main">
-          <div class="Money">
-              <div class="green">{{gameState.money.toFixed()}} credits</div>
-          </div>
-        <div class="power control" ng-click="rechargePower($event)">
-            <dial title="power"
-                  value="playerShip.power.value"
-                  min="0"
-                  max="playerShip.power.max"
-                  colour="#B83223"></dial>
-            <div class="stats">
-                <div class="green">+{{powerProduction() | si}}</div>
-                <div class="red">-{{powerConsumption() | si}}</div>
-                <div>{{powerOutput() | si}}</div>
+
+<head>
+    <meta charset="utf-8">
+    <link href='http://fonts.googleapis.com/css?family=Roboto:400,300,100,500,700' rel='stylesheet' type='text/css'>
+    <link rel="stylesheet" href="style.css" type="text/css">
+    <script src="bower_components/angular/angular.min.js"></script>
+    <script src="bower_components/lodash/dist/lodash.min.js"></script>
+    <script src="src/directives.js"></script>
+    <script src="src/services.js"></script>
+    <script src="src/upgrades.js"></script>
+    <script src="src/app.js"></script>
+</head>
+
+<body ng-controller="Main">
+    <header>
+        <div class="left-bar">
+            <span>{{gameState.money | number:0}} credits</span>
+        </div>
+    </header>
+    <article>
+        <section class="player-ship">
+            <div class="left-bar">
+                <h4>Ship systems</h4>
             </div>
-        </div>
-        <div class="container">
-            <dial title="shields"
-                  value="playerShip.shields.value"
-                  colour="#23a9b8"></dial>
-            <dial title="hull"
-                  value="playerShip.hull.value"
-                  ng-click="rechargeHull()"
-                  colour="#99cc00"></dial>
-        </div>
-    </body>
+            <div class="systems">
+                <div class="system">
+                    <dial class="control" title="power" value="playerShip.power.value" min="0" max="playerShip.power.max" colour="#B83223" ng-click="rechargePower($event)"></dial>
+                    <div class="controls">
+                        <span class="green text-right">+{{powerProduction() | si}}</span>
+                        <span class="red text-right">-{{powerConsumption() | si}}</span>
+                        <span class="text-right">{{powerOutput() | si}}</span>
+                    </div>
+                </div>
+                <div class="system">
+                    <dial title="shields" value="playerShip.shields.value" colour="#23a9b8"></dial>
+                </div>
+                <div class="system">
+                    <dial class="control" title="hull" value="playerShip.hull.value" ng-click="rechargeHull()" colour="#99cc00"></dial>
+                </div>
+            </div>
+        </section>
+        <section>
+            <div class="left-bar">
+                <h4>Enemy ship</h4>
+            </div>
+            <div class="systems">
+                <div class="system">
+                    <dial title="hull" value="enemyShip.hull.value" colour="#99cc00"></dial>
+                </div>
+            </div>
+        </section>
+    </article>
+</body>
+
 </html>
