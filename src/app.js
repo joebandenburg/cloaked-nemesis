@@ -42,7 +42,14 @@
                 max: 100,
                 regenRate: 1,
                 boost: 1
-            }
+            },
+            weapons: [{
+                fireRate: 0.5,
+                lastFired: 0,
+                damage: 20,
+                hitProbability: 0.5,
+                value: 0
+            }]
         };
 
         $scope.playerShip = {
@@ -54,9 +61,21 @@
         });
 
         _.each($scope.playerShipBaseStats, function (baseSystemStats, systemName) {
-            $scope.playerShip[systemName] = {
-                value: baseSystemStats.max || 0
-            };
+            if (_.isArray($scope.playerShipBaseStats[systemName]))
+            {
+                $scope.playerShip[systemName] = [];
+                _.each($scope.playerShipBaseStats[systemName], function (systemItem, index) {
+                    $scope.playerShip[systemName][index] = {
+                        value: systemItem.max || 0
+                    };
+                });
+            }
+            else
+            {
+                $scope.playerShip[systemName] = {
+                    value: baseSystemStats.max || 0
+                };
+            }
         });
 
         function calculateShipStats() {
@@ -170,6 +189,19 @@
                         var damage = weapon.damage;
                         damage = systemHit($scope.playerShip.shields, damage);
                         damage = systemHit($scope.playerShip.hull, damage);
+                    }
+                }
+            });
+
+            // Player fires
+            $scope.playerShip.weapons.forEach(function (weapon) {
+                if (weapon.lastFired + weapon.fireRate < time) {
+                    weapon.lastFired = time;
+                    var wasHit = Math.random() < weapon.hitProbability;
+                    if (wasHit) {
+                        var damage = weapon.damage;
+                        damage = systemHit($scope.enemyShip.shields, damage);
+                        damage = systemHit($scope.enemyShip.hull, damage);
                     }
                 }
             });
