@@ -12,16 +12,47 @@ body {
 }
 
 header {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
     display: flex;
     height: 48px;
     line-height: 48px;
     font-size: 24px;
     background-color: #ccc;
     color: #222;
+    z-index: 1;
 }
 
-header > span {
-    margin: 0 8px;
+section {
+    display: flex;
+    border-top: 1px solid #333;
+}
+
+section:first-of-type {
+    margin-top: 48px;
+    border-top: none;
+}
+
+h1 {
+    font-size: 34px;
+    margin: 0;
+}
+
+h2 {
+    font-size: 24px;
+    margin: 0;
+}
+
+.left-bar {
+    width: 384px;
+    padding: 0 8px;
+    border-right: 1px solid #333;
+}
+
+header > .left-bar {
+    border-color: #888;
 }
 
 .control {
