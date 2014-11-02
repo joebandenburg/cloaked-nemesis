@@ -19,16 +19,39 @@ body {
     border-color: #23a9b8;
 }
 
+.systems {
+    display: flex;
+    flex-wrap: wrap;
+}
+
+.system {
+    margin: 8px;
+    display: flex;
+}
+
+.controls {
+    display: flex;
+    flex-direction: column;
+    border-top: 1px solid #444;
+    border-bottom: 1px solid #444;
+    border-right: 1px solid #444;
+    min-width: 64px;
+}
+
+.controls span {
+    padding: 4px;
+    border-bottom: 1px solid #444;
+}
+
 dial {
     display: block;
     position: relative;
-    width: 200px;
-    height: 200px;
+    width: 192px;
+    height: 192px;
     display: flex;
     justify-content: center;
     align-items: center;
     border: 1px solid #444;
-    margin: 10px;
 }
 
 dial > span {
@@ -37,7 +60,7 @@ dial > span {
 
 dial > .value {
     left: 0;
-    width: 200px;
+    width: 192px;
     top: 0;
     bottom: 0;
     font-weight: 100;
@@ -63,9 +86,6 @@ dial > .title {
     color: #B83223;
 }
 
-.power {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    width: 400px;
+.text-right {
+    text-align: right;
 }

@@ -15,12 +15,22 @@
 
 <body ng-controller="Main">
     <span class="Money green">{{gameState.money | number:0}} credits</span>
-    <span class="green">+{{powerProduction() | si}}</span>
-    <span class="red">-{{powerConsumption() | si}}</span>
-    <span>{{powerOutput() | si}}</span>
-    <dial title="power" value="playerShip.power.value" min="0" max="playerShip.power.max" class="control" colour="#B83223" ng-click="rechargePower($event)"></dial>
-    <dial title="shields" value="playerShip.shields.value" colour="#23a9b8"></dial>
-    <dial title="hull" value="playerShip.hull.value" ng-click="rechargeHull()" class="control" colour="#99cc00"></dial>
+    <div class="systems">
+        <div class="system">
+            <dial class="control" title="power" value="playerShip.power.value" min="0" max="playerShip.power.max" colour="#B83223" ng-click="rechargePower($event)"></dial>
+            <div class="controls">
+                <span class="green text-right">+{{powerProduction() | si}}</span>
+                <span class="red text-right">-{{powerConsumption() | si}}</span>
+                <span class="text-right">{{powerOutput() | si}}</span>
+            </div>
+        </div>
+        <div class="system">
+            <dial title="shields" value="playerShip.shields.value" colour="#23a9b8"></dial>
+        </div>
+        <div class="system">
+            <dial class="control" title="hull" value="playerShip.hull.value" ng-click="rechargeHull()" colour="#99cc00"></dial>
+        </div>
+    </div>
 </body>
 
 </html>
