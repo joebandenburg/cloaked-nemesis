@@ -24,7 +24,7 @@
     app.controller('Main', function ($scope, requestAnimationFrameLoop, UpgradeTypesData, UpgradeOrder) {
         $scope.gameState = {
             money: 0,
-            moneyRate: 10
+            moneyRate: 1000
         };
 
         $scope.playerShipBaseStats = {
@@ -98,6 +98,13 @@
         }
 
         calculateShipStats();
+
+        function getUpgradeCost(upgradeName)
+        {
+            var upgrade = UpgradeTypesData[upgradeName];
+            var nextUpgradeLevel = $scope.playerShip.upgrades[upgradeName] + 1;
+            return upgrade.cost(nextUpgradeLevel);
+        }
 
         function buyUpgrade(upgradeName) {
             var upgrade = UpgradeTypesData[upgradeName];
@@ -263,6 +270,18 @@
 
         $scope.powerOutput = function() {
             return $scope.powerProduction() - $scope.powerConsumption();
+        };
+
+        $scope.powerUpgrade = function() {
+            return getUpgradeCost('PowerRegenRate');
+        };
+
+        $scope.shieldRegen = function() {
+            return $scope.playerShip.shields.regenRate;
+        };
+
+        $scope.shieldUpgrade = function() {
+            return getUpgradeCost('ShieldsRegenRate');
         };
 
         $scope.weaponCharge = function(weapon) {
