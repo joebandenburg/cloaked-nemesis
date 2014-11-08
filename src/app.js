@@ -44,9 +44,9 @@
                 boost: 1
             },
             weapons: [{
-                fireRate: 0.5,
+                fireRate: 4,
                 lastFired: 0,
-                damage: 20,
+                damage: 30,
                 hitProbability: 0.5,
                 value: 0
             }]
@@ -111,8 +111,8 @@
 
         $scope.enemyShip = {
             shields: {
-                max: 100,
-                value: 100,
+                max: 0,
+                value: 0,
                 regenRate: 0,
                 powerUsage: 1000
             },
@@ -238,10 +238,8 @@
             return $scope.powerProduction() - $scope.powerConsumption();
         };
         
-        $scope.enemyWeaponCharge = function() {
-            var weapon = $scope.enemyShip.weapons[0];
-            var charged = ((lastTime - weapon.lastFired) / weapon.fireRate) * 100;
-            return charged;
+        $scope.weaponCharge = function(weapon) {
+            return ((lastTime - weapon.lastFired) / weapon.fireRate) * 100;
         };
     });
 })();

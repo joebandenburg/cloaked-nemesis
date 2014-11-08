@@ -39,6 +39,9 @@
                 <div class="system">
                     <dial class="control" title="hull" value="playerShip.hull.value" ng-click="rechargeHull()" colour="#99cc00"></dial>
                 </div>
+                <div class="system">
+                    <dial title="weapon" value="weaponCharge(playerShip.weapons[0])" colour="#B83223"></dial>
+                </div>
             </div>
         </section>
         <section>
@@ -48,7 +51,7 @@
             <div class="systems">
                 <div class="system">
                     <dial title="hull" value="enemyShip.hull.value" colour="#99cc00"></dial>
-                    <dial title="weapon" value="enemyWeaponCharge()" colour="#B83223"></dial>
+                    <dial title="weapon" value="weaponCharge(enemyShip.weapons[0])" colour="#B83223"></dial>
                 </div>
             </div>
         </section>
