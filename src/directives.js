@@ -3,7 +3,7 @@
 
     var app = angular.module('clockedNemesisDirectives', []);
 
-    app.directive('dial', function () {
+    app.directive('dial', function (numberFilter) {
         function link(scope, element) {
             var canvas = element.find('canvas')[0];
             var ctx = canvas.getContext('2d');
@@ -14,9 +14,17 @@
             var imageSize = 120;
             var minValue;
             var maxValue;
+            var usingLabel = false;
 
             scope.$watch('colour', function (value) {
                 progressColour = value;
+            });
+            
+            scope.$watch('label', function (label) {
+                if (label !== undefined) {
+                    usingLabel = true;
+                    scope.innerLabel = label;
+                }
             });
 
             scope.$watch('minValue', function (value) {
@@ -31,7 +39,9 @@
                 if (minValue !== undefined && maxValue !== undefined) {
                     value = (value - minValue) / (maxValue - minValue) * 100;
                 }
-                scope.percentValue = value;
+                if (!usingLabel) {
+                    scope.innerLabel = numberFilter(value, 0) + '%';
+                }
                 var center = imageSize / 2;
                 ctx.clearRect(0, 0, imageSize, imageSize);
                 ctx.strokeStyle = backgroundColour;
@@ -52,10 +62,11 @@
                 value: '=',
                 minValue: '=min',
                 maxValue: '=max',
-                colour: '@'
+                colour: '@',
+                label: '@'
             },
             link: link,
-            template: '<canvas width="120" height="120"></canvas><span class="value">{{percentValue | number:0}}%</span><span class="title">{{title}}</span>'
+            template: '<canvas width="120" height="120"></canvas><span class="value">{{innerLabel}}</span><span class="title">{{title}}</span>'
         };
     });
 })();
