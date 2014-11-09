@@ -36,5 +36,10 @@ describe('filters', function () {
             expect(siFilter(5e-3)).toBe('0.005');
             expect(siFilter(9e-3)).toBe('0.009');
         }));
+        it('defaults to numberFilters decimal formatting method', inject(function (siFilter) {
+            expect(siFilter(1e-4)).toBe('0.000');
+            expect(siFilter(5e-4)).toBe('0.001');
+            expect(siFilter(9e-4)).toBe('0.001');
+        }));
     });
 });
