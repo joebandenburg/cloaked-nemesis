@@ -113,8 +113,8 @@
                     regenRate: 0
                 },
                 hull: {
-                    max: 100 + (5 * level),
-                    value: 100 + (5 * level),
+                    max: 10 + (50 * level),
+                    value: 10 + (50 * level),
                     regenRate: 0.1 * level,
                     boost: 1
                 },
