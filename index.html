@@ -16,7 +16,7 @@
 <body ng-controller="Main">
     <header>
         <div class="left-bar">
-            <span>{{gameState.money | number:0}}$</span>
+            <span>${{gameState.money | si}}</span>
         </div>
     </header>
     <article>
@@ -31,14 +31,14 @@
                         <span class="green text-right">+{{powerProduction() | si}}</span>
                         <span class="red text-right">-{{powerConsumption() | si}}</span>
                         <span class="text-right">{{powerOutput() | si}}</span>
-                        <span class="text-right">{{powerUpgrade() | si}}$</span>
+                        <span class="text-right">${{powerUpgrade() | si}}</span>
                     </div>
                 </div>
                 <div class="system">
                     <dial title="shields" value="playerShip.shields.value" colour="#23a9b8" ng-click="rechargeShields($event)"></dial>
                     <div class="controls">
                         <span class="green text-right">Regen {{shieldRegen() | si}}</span>
-                        <span class="text-right">{{shieldUpgrade() | si}}$</span>
+                        <span class="text-right">${{shieldUpgrade() | si}}</span>
                     </div>
                 </div>
                 <div class="system">
@@ -53,7 +53,7 @@
             <div class="left-bar">
                 <h4>Enemy ship</h4>
                 <p>Level {{enemyShip.level}}</p>
-                <p>You will earn {{enemyShip.prizeMoney}}$ for destroying it</p>
+                <p>You will earn ${{enemyShip.prizeMoney | si}} for destroying it</p>
             </div>
             <div class="systems">
                 <div class="system">
