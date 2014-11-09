@@ -27,7 +27,7 @@
             </div>
             <div class="systems">
                 <div class="system">
-                    <dial class="control" title="power" value="playerShip.power.value" min="0" max="playerShip.power.max" colour="#B83223" ng-click="rechargePower($event)"></dial>
+                    <dial class="control" title="power" value="playerShip.power.value" min="0" max="playerShip.power.max" colour="#B83223"  label="{{playerShip.power.value | si:0}}W" ng-click="rechargePower($event)"></dial>
                     <div class="controls">
                         <span class="green text-right">+{{powerProduction() | si}}</span>
                         <span class="red text-right">-{{powerConsumption() | si}}</span>
