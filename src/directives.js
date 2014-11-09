@@ -1,4 +1,4 @@
-(function() {
+(function () {
     'use strict';
 
     var app = angular.module('clockedNemesisDirectives', []);
@@ -12,7 +12,8 @@
             var progressColour = '#23a9b8';
             var backgroundColour = '#333';
             var imageSize = 120;
-            var minValue, maxValue;
+            var minValue;
+            var maxValue;
 
             scope.$watch('colour', function (value) {
                 progressColour = value;

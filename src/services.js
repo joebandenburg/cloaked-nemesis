@@ -1,6 +1,6 @@
-(function() {
+(function () {
     'use strict';
-    
+
     var app = angular.module('clockedNemesisServices', []);
 
     app.factory('requestAnimationFrameLoop', function ($rootScope) {

@@ -1,13 +1,13 @@
 // Everything is in seconds. You noob.
 
-(function() {
+(function () {
     'use strict';
 
     var app = angular.module('clockedNemesisApp', ['clockedNemesisDirectives', 'clockedNemesisServices', 'clockedNemesisUpgrades']);
 
-    app.filter('si', function(numberFilter) {
+    app.filter('si', function (numberFilter) {
         var siUnits = ['', 'k', 'M', 'G', 'T', 'P', 'E', 'Z', 'Y'];
-        return function(input) {
+        return function (input) {
             var siUnitIndex = 0;
             if (input !== 0) {
                 // Pop pop
@@ -55,7 +55,7 @@
         };
 
         $scope.playerShip = {
-            upgrades: { }
+            upgrades: {}
         };
 
         _.each(UpgradeTypesData, function (value, key) {
@@ -63,17 +63,14 @@
         });
 
         _.each($scope.playerShipBaseStats, function (baseSystemStats, systemName) {
-            if (_.isArray($scope.playerShipBaseStats[systemName]))
-            {
+            if (_.isArray($scope.playerShipBaseStats[systemName])) {
                 $scope.playerShip[systemName] = [];
                 _.each($scope.playerShipBaseStats[systemName], function (systemItem, index) {
                     $scope.playerShip[systemName][index] = {
                         value: systemItem.max || 0
                     };
                 });
-            }
-            else
-            {
+            } else {
                 $scope.playerShip[systemName] = {
                     value: baseSystemStats.max || 0
                 };
@@ -90,7 +87,7 @@
             _.each(UpgradeOrder, function (upgrade) {
                 var upgradeLevel = $scope.playerShip.upgrades[upgrade.name];
                 _.each(upgrade.modifier, function (modifierFn, modifierName) {
-                    _.times(upgradeLevel, function() {
+                    _.times(upgradeLevel, function () {
                         $scope.playerShip[upgrade.system][modifierName] += modifierFn(upgradeLevel);
                     });
                 });
@@ -99,8 +96,7 @@
 
         calculateShipStats();
 
-        function getUpgradeCost(upgradeName)
-        {
+        function getUpgradeCost(upgradeName) {
             var upgrade = UpgradeTypesData[upgradeName];
             var nextUpgradeLevel = $scope.playerShip.upgrades[upgradeName] + 1;
             return upgrade.cost(nextUpgradeLevel);
@@ -110,67 +106,60 @@
             var upgrade = UpgradeTypesData[upgradeName];
             var nextUpgradeLevel = $scope.playerShip.upgrades[upgradeName] + 1;
             var nextUpgradeCost = upgrade.cost(nextUpgradeLevel);
-            if ($scope.gameState.money >= nextUpgradeCost)
-            {
+            if ($scope.gameState.money >= nextUpgradeCost) {
                 $scope.gameState.money -= nextUpgradeCost;
                 $scope.playerShip.upgrades[upgradeName] = nextUpgradeLevel;
                 calculateShipStats();
             }
         }
 
-        function getNewEnemyShip(level)
-        {
+        function getNewEnemyShip(level) {
             return {
-            level: level,
-            shields: {
-                max: 0,
-                value: 0,
-                regenRate: 0,
-                powerUsage: 1000
-            },
-            power: {
-                max: 10000,
-                value: 10000,
-                boost: 0,
-                regenRate: 0
-            },
-            hull: {
-                max: 100 + (5 * level),
-                value: 100 + (5 * level),
-                regenRate: 0.1 * level,
-                boost: 1
-            },
-            weapons: [{
-                fireRate: 3 - Math.min(level * 0.1, 2),
-                lastFired: 0,
-                damage: 20 + (2 * level),
-                hitProbability: 0.8,
-                value: 0
-            }]
-        };
+                level: level,
+                shields: {
+                    max: 0,
+                    value: 0,
+                    regenRate: 0,
+                    powerUsage: 1000
+                },
+                power: {
+                    max: 10000,
+                    value: 10000,
+                    boost: 0,
+                    regenRate: 0
+                },
+                hull: {
+                    max: 100 + (5 * level),
+                    value: 100 + (5 * level),
+                    regenRate: 0.1 * level,
+                    boost: 1
+                },
+                weapons: [{
+                    fireRate: 3 - Math.min(level * 0.1, 2),
+                    lastFired: 0,
+                    damage: 20 + (2 * level),
+                    hitProbability: 0.8,
+                    value: 0
+                }]
+            };
         }
 
         $scope.enemyShip = getNewEnemyShip(1);
 
         var lastTime = window.performance.now() / 1000;
 
-        function systemHit(system, damage)
-        {
-            if (system.value >= damage)
-            {
+        function systemHit(system, damage) {
+            if (system.value >= damage) {
                 system.value -= damage;
                 damage = 0;
-            }
-            else
-            {
+            } else {
                 damage -= system.value;
                 system.value = 0;
             }
             return damage;
         }
 
-        function systemDelta(system, delta)
-        {
+        function systemDelta(system, delta) {
             system.value = Math.min(system.max, Math.max(0, system.value + delta));
         }
 
@@ -183,8 +172,7 @@
             $scope.gameState.money += $scope.gameState.moneyRate * timeDelta;
 
             // Use power
-            systemDelta($scope.playerShip.power,
-                        ($scope.playerShip.power.regenRate - $scope.playerShip.shields.powerUsage)* timeDelta);
+            systemDelta($scope.playerShip.power, ($scope.playerShip.power.regenRate - $scope.playerShip.shields.powerUsage) * timeDelta);
 
             if ($scope.playerShip.power.value > 0) {
                 // Regen shields
@@ -230,61 +218,56 @@
 
         requestAnimationFrameLoop(updateLoop);
 
-        $scope.rechargeHull = function() {
+        $scope.rechargeHull = function () {
             systemDelta($scope.playerShip.hull, $scope.playerShip.hull.boost);
         };
 
-        $scope.rechargePower = function($event) {
-            if ($event.button === 0)
-            {
+        $scope.rechargePower = function ($event) {
+            if ($event.button === 0) {
                 systemDelta($scope.playerShip.power, $scope.playerShip.power.boost);
-            }
-            else
-            {
+            } else {
                 buyUpgrade('PowerRegenRate');
             }
         };
 
-        $scope.rechargeShields = function($event) {
+        $scope.rechargeShields = function ($event) {
             if ($event.button === 0) {
                 if ($scope.playerShip.power.value > 0) {
                     systemDelta($scope.playerShip.power, -$scope.playerShip.shields.boostPower);
                     systemDelta($scope.playerShip.shields, $scope.playerShip.shields.boost);
                 }
-            }
-            else
-            {
+            } else {
                 buyUpgrade('ShieldsRegenRate');
             }
         };
 
-        $scope.powerProduction = function() {
+        $scope.powerProduction = function () {
             // TODO: Calculate this properly
             return $scope.playerShip.power.regenRate;
         };
 
-        $scope.powerConsumption = function() {
+        $scope.powerConsumption = function () {
             // TODO: Calculate this properly
             return $scope.playerShip.shields.powerUsage;
         };
 
-        $scope.powerOutput = function() {
+        $scope.powerOutput = function () {
             return $scope.powerProduction() - $scope.powerConsumption();
         };
 
-        $scope.powerUpgrade = function() {
+        $scope.powerUpgrade = function () {
             return getUpgradeCost('PowerRegenRate');
         };
 
-        $scope.shieldRegen = function() {
+        $scope.shieldRegen = function () {
             return $scope.playerShip.shields.regenRate;
         };
 
-        $scope.shieldUpgrade = function() {
+        $scope.shieldUpgrade = function () {
             return getUpgradeCost('ShieldsRegenRate');
         };
 
-        $scope.weaponCharge = function(weapon) {
+        $scope.weaponCharge = function (weapon) {
             return ((lastTime - weapon.lastFired) / weapon.fireRate) * 100;
         };
     });

@@ -1,12 +1,10 @@
-(function() {
+(function () {
     'use strict';
 
     var app = angular.module('clockedNemesisUpgrades', []);
 
-    function getExpUpgradeFn(exp, multiplyer)
-    {
-        return function upgradeFn(level)
-        {
+    function getExpUpgradeFn(exp, multiplyer) {
+        return function upgradeFn(level) {
             return Math.floor(Math.pow(level, exp) * multiplyer);
         };
     }
@@ -16,8 +14,7 @@
             'system': 'power',
             'title:': 'regen rate',
             'cost': getExpUpgradeFn(1.1, 3),
-            'modifier':
-            {
+            'modifier': {
                 'regenRate': getExpUpgradeFn(1.05, 3)
             }
         },
@@ -25,8 +22,7 @@
             'system': 'shields',
             'title': 'regen rate',
             'cost': getExpUpgradeFn(1.1, 10),
-            'modifier':
-            {
+            'modifier': {
                 'regenRate': getExpUpgradeFn(1.05, 0.1),
                 'powerUsage': getExpUpgradeFn(1.05, 15)
             }
@@ -39,8 +35,7 @@
     ];
 
     _.each(UpgradeTypesData, function (upgradeTypeData, upgradeName) {
-        if (UpgradeOrder.indexOf(upgradeTypeData) === -1)
-        {
+        if (UpgradeOrder.indexOf(upgradeTypeData) === -1) {
             throw new Error('UpgradeTypeData ' + upgradeName + ' is not listed in UpgradeOrder');
         }
 
