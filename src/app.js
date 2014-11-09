@@ -23,8 +23,7 @@
 
     app.controller('Main', function ($scope, requestAnimationFrameLoop, UpgradeTypesData, UpgradeOrder) {
         $scope.gameState = {
-            money: 0,
-            moneyRate: 1000
+            money: 100
         };
 
         $scope.playerShipBaseStats = {
@@ -116,6 +115,7 @@
         function getNewEnemyShip(level) {
             return {
                 level: level,
+                prizeMoney: level * 1000,
                 shields: {
                     max: 0,
                     value: 0,
@@ -168,9 +168,6 @@
             var timeDelta = time - lastTime;
             lastTime = time;
 
-            // Get money
-            $scope.gameState.money += $scope.gameState.moneyRate * timeDelta;
-
             // Use power
             systemDelta($scope.playerShip.power, ($scope.playerShip.power.regenRate - $scope.playerShip.shields.powerUsage) * timeDelta);
 
@@ -209,6 +206,7 @@
                         damage = systemHit($scope.enemyShip.hull, damage);
 
                         if (damage > 0) {
+                            $scope.gameState.money += $scope.enemyShip.prizeMoney;
                             $scope.enemyShip = getNewEnemyShip($scope.enemyShip.level + 1);
                         }
                     }
