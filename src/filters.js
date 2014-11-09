@@ -5,7 +5,7 @@
 
     app.filter('si', function (numberFilter) {
         var siUnits = ['', 'k', 'M', 'G', 'T', 'P', 'E', 'Z', 'Y'];
-        return function (input) {
+        return function (input, decimals) {
             var siUnitIndex = 0;
             if (input !== 0) {
                 // Pop pop
@@ -15,7 +15,7 @@
                 input = input / Math.pow(10, magnitude * 3);
                 siUnitIndex = magnitude;
             }
-            return numberFilter(input) + siUnits[siUnitIndex];
+            return numberFilter(input, decimals) + siUnits[siUnitIndex];
         };
     });
 })();
