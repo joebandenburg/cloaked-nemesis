@@ -1,0 +1,10 @@
+{
+    "requireCurlyBraces": true,
+    "requireSpaceBeforeBlockStatements": true,
+    "requireSpacesInConditionalExpression": true,
+    "disallowSpacesInCallExpression": true,
+    "disallowMultipleVarDecl": true,
+    "requireBlocksOnNewline": true,
+    "disallowPaddingNewlinesInBlocks": true,
+    "disallowNewlineBeforeBlockStatements": true
+}
